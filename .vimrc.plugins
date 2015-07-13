@@ -128,6 +128,9 @@ let tlist_hlsl_settings = 'c;d:macro;g:enum;s:struct;u:union;t:typedef;v:variabl
 " add actionscript language
 let tlist_actionscript_settings = 'actionscript;c:class;f:method;p:property;v:variable'
 
+let tlist_nim_settings = 'nim;c:class;e:enum;u:tuple;s:subrange;p:proctype;f:procedure;m:method;t:template;i:iterator;d:macro;o:operator'
+"let tlist_nim_settings = 'nim;t:class;f:procedure'
+
 " DISABLE: use tlist instead
 " " exvim/ex-tagbar: invoke by <F4>
 " " ---------------------------------------------------
@@ -306,8 +309,9 @@ let g:NERDRemoveExtraSpaces = 1
 let g:NERDCustomDelimiters = {
             \ 'vimentry': { 'left': '--' },
             \ }
-map <unique> <F11> <Plug>NERDCommenterAlignBoth
-map <unique> <C-F11> <Plug>NERDCommenterUncomment
+map <unique> <F11> <Plug>NERDCommenterToggle
+" map <unique> <F11> <Plug>NERDCommenterAlignBoth
+" map <unique> <C-F11> <Plug>NERDCommenterUncomment
 
 " syntastic: invoke when you save file and have syntac-checker
 " ---------------------------------------------------

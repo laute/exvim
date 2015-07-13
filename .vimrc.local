@@ -1,2 +1,289 @@
 " This file will be loaded at the end of .vimrc.
 " This file is designed to add your own vim scripts or override the exVim's .vimrc settings.
+
+if has('gui_running')
+    au! ex_gui_font
+    if OSX()
+        set guifont=M\+\ 1m\ regular\ for\ Powerline:h12
+    else
+        set guifont=Consolas:h10
+        set guifontwide=SimHei:h10
+    endif
+    set guioptions=eg
+else
+    set mouse=a
+    let g:solarized_termtrans = 1
+    " colorscheme desert
+    colorscheme solarized
+    set background=dark
+endif
+
+if exists('$TMUX')
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+
+set number
+set relativenumber
+" Minimal number of screen lines to keep above and below the cursor.
+set scrolloff=1
+
+"--------------------------------------------------
+" encoding settings {{
+"--------------------------------------------------
+
+" the list of encodings considered when starting to edit an existing file.
+set fileencodings=cp936,ucs-bom,utf-8,gb18030,big5,euc-jp,euc-kr,latin1
+
+" fileencoding(fenc): for the file of this buffer.
+" let Vim detects it automatically.
+" to convert file encoding to utf-8 when saving file:
+" :set fileencoding=utf8
+" :w
+" or
+" :ed ++fenc=utf8
+" :w
+
+if WINDOWS()
+    if has("gui_running")
+        " encoding: used inside Vim.
+        set encoding=utf-8
+        source $VIMRUNTIME/delmenu.vim
+        source $VIMRUNTIME/menu.vim
+        language messages zh_CN.utf-8
+    else
+        " FIXME: the same as locale?
+        " set termencoding=cp936
+        " set encoding=cp936
+    endif
+endif
+
+set nobomb
+
+if v:lang =~? '^\(zh\)\|\(ja\)\|\(ko\)'
+    set ambiwidth=double
+endif
+
+" fileformats
+set ffs=dos,unix,mac
+
+ " encoding settings }}
+
+"===================================================
+" Key mappings {{{
+"===================================================
+" avoid the cursor keys when recalling commands from history.
+cnoremap <c-p> <up>
+cnoremap <c-n> <down>
+
+" Visual mode related {
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :call VisualSelection('f', '')<CR>
+vnoremap <silent> # :call VisualSelection('b', '')<CR>
+" When you press gv you Ack after the selected text
+vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
+" When you press <leader>r you can search and replace the selected text
+vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
+" }
+
+"--------------------------------------------------
+" save file {
+inoremap <silent> <c-s> <esc>:w<cr>i
+noremap <silent> <c-s> :w<cr>
+nnoremap <leader>w :w!<cr>
+"}
+
+"--------------------------------------------------
+" managing windows {
+nnoremap <silent> [w <c-w>W
+nnoremap <silent> ]w <c-w>w
+nnoremap <silent> [W <c-w>t
+nnoremap <silent> ]W <c-w>b
+nnoremap <leader>wv <c-w>v<c-w>l
+nnoremap <leader>ws <c-w>s
+nnoremap <leader>wc <c-w>c
+nnoremap <F4>       <c-w>c
+nnoremap <leader>ww <c-w>w
+nnoremap <leader>wo <c-w>o
+nnoremap <leader>wj <c-w>j
+nnoremap <leader>wk <c-w>k
+nnoremap <leader>wh <c-w>h
+" }
+
+" managing buffers {
+" https://github.com/tpope/vim-unimpaired
+nnoremap <silent> [b :bprevious<cr>
+nnoremap <silent> ]b :bnext<cr>
+nnoremap <silent> [B :bfirst<cr>
+nnoremap <silent> ]B :blast<cr>
+" :only doesn't delete other buffers
+"nnoremap <silent> <leader>bo  :only<cr>
+nnoremap <silent> <leader>bo  :call BufOnly(0)<cr>
+nnoremap <silent> <leader>boo :call BufOnly(1)<cr>
+nnoremap <silent> <leader>bl  :buffers<cr>
+nnoremap <silent> <leader>ls  :buffers<cr>
+nnoremap <silent> <leader>bc  :BufClose<cr>
+nnoremap <silent> <leader>bd  :bd<cr>
+nnoremap <silent> <leader>bdd :bd!<cr>
+nnoremap <silent> <leader>ba  :1,1000 bd!<cr>
+nnoremap <silent> <leader>ed  :edit <c-r>=expand("%:p:h")<cr>/
+" }
+
+" managing tabs {
+nnoremap <silent> ]t gt
+nnoremap <silent> [t gT
+nnoremap <silent> [T :tabfirst<cr>
+nnoremap <silent> ]T :tablast<cr>
+nnoremap <silent> <leader>tn :tabnew<cr>
+nnoremap <silent> <leader>tc :tabclose<cr>
+nnoremap <silent> <leader>to :tabonly<cr>
+nnoremap <silent> <leader>tm :tabmove
+" open a new tab to edit files in the same directory
+nnoremap <silent> <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+" }
+
+" cope: quickfix {
+nnoremap <silent> <leader>cn :botright cope<cr>
+nnoremap <silent> <leader>ce ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
+nnoremap <silent> [c :cp<cr>
+nnoremap <silent> ]c :cn<cr>
+nnoremap <silent> [C :cfirst<cr>
+nnoremap <silent> ]C :clast<cr>
+" }
+
+" copy and paste {
+"--------------------------------------------------
+" make copy and paste easier in Windows.
+" the "anonymous" register is aliased to the * register using:
+set clipboard=unnamed
+" toggle indentation when pasting
+set paste
+"set nopaste
+" use ,v to select text just copied
+nnoremap <leader>v v`]
+" }
+
+" code navigation {
+"--------------------------------------------------
+" gd, gD, *, #, g*, g#
+" [[, ]], %
+" Ctrl-O, Ctrl-I
+nnoremap <F3> <c-]>
+nnoremap <S-F3> <c-o>
+if OSX()
+    nnoremap <D-]> <c-]>
+    nnoremap <D-[> <c-o>
+endif
+" code navigation }
+
+"--------------------------------------------------
+nnoremap <leader>cd :cd <c-r>=expand("%:p:h")<cr><cr>:pwd<cr>
+
+" treat long lines as break lines
+nnoremap j gj
+nnoremap k gk
+
+nnoremap <silent> <leader><space> :noh<cr>
+nnoremap <silent> <c-l> :<c-u>nohlsearch<cr><c-l>
+
+"--------------------------------------------------
+" nnoremap <leader>ccc :ed ~/.vim_runtime/my_configs.vim<cr>
+" nnoremap <leader>ss :so ~/.vimrc<cr>
+
+" key mappings }}}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Helper functions {{{
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! VisualSelection(direction, extra_filter) range
+    let l:saved_reg = @"
+    execute "normal! vgvy"
+
+    let l:pattern = escape(@", '\\/.*$^~[]')
+    let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+    if a:direction == 'b'
+        execute "normal ?" . l:pattern . "^M"
+    elseif a:direction == 'gv'
+        call CmdLine("Ack \"" . l:pattern . "\" " )
+    elseif a:direction == 'replace'
+        call CmdLine("%s" . '/'. l:pattern . '/')
+    elseif a:direction == 'f'
+        execute "normal /" . l:pattern . "^M"
+    endif
+
+    let @/ = l:pattern
+    let @" = l:saved_reg
+endfunction
+
+command! DeleteTrailingWS call <SID>DeleteTrailingWS()
+function! <SID>DeleteTrailingWS()
+    " execute "normal mz"
+    %s/\s\+$//ge
+    " execute "normal `z"
+    " execute "normal m."
+endfunction
+
+" Don't close window, when deleting a buffer
+command! BufClose call <SID>BufcloseCloseIt()
+function! <SID>BufcloseCloseIt()
+    let l:currentBufNum = bufnr("%")
+    let l:alternateBufNum = bufnr("#")
+
+    if buflisted(l:alternateBufNum)
+        buffer #
+    else
+        bnext
+    endif
+
+    if bufnr("%") == l:currentBufNum
+        new
+    endif
+
+    if buflisted(l:currentBufNum)
+        execute("bdelete! ".l:currentBufNum)
+    endif
+endfunction
+
+" return the list of buffer numbers
+function! BufList()
+    redir => bufnames
+    silent ls
+    redir END
+    let list = []
+    for i in split(bufnames, "\n")
+        let buf = split(i, ' ')
+        call add(list, buf[0])
+    endfor
+    return list
+endfunction
+
+" delete all other buffers except the current one
+function! BufOnly(force)
+    let list = filter(BufList(), 'v:val != bufnr("%")')
+    let bdcmd = a:force ? "bdelete! " : "bdelete "
+    for buffer in list
+        exec bdcmd . buffer
+    endfor
+endfunction
+
+" pipe the output of a command into a new tab.
+" example usage:
+" :TabMessage highlight
+function! TabMessage(cmd)
+    redir => message
+    silent execute a:cmd
+    redir END
+    tabnew
+    silent put=message
+    set nocompatible
+endfunction
+command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)
+
+" Helper functions }}}
+
