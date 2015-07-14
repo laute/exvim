@@ -34,7 +34,7 @@ let g:miniBufExplTabWrap = 1
 " ---------------------------------------------------
 Plugin 'bling/vim-airline'
 
-if has('gui_running')
+if has('gui_running') && g:hostname != '2012-DEV'
     let g:airline_powerline_fonts = 1
 else
     let g:airline_powerline_fonts = 0
