@@ -68,3 +68,5 @@ nn <c-g> :call JumpToDef()<cr>
 ino <c-g> <esc>:call JumpToDef()<cr>i
 " nim related }
 
+Plugin 'oplatek/Conque-Shell'
+
