@@ -9,6 +9,8 @@ if has('gui_running')
         set guifont=DejaVu_Sans_Mono_for_Powerline:h9
         "set guifontwide=SimHei:h10
         "set guifontwide=XHei_Mono.Heiti:h9
+        set noerrorbells visualbell t_vb=
+        autocmd GUIEnter * set visualbell t_vb=
     else
         set guifont=Consolas:h10
         set guifontwide=SimHei:h10
