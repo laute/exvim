@@ -5,11 +5,17 @@ if has('gui_running')
     au! ex_gui_font
     if OSX()
         set guifont=M\+\ 1m\ regular\ for\ Powerline:h12
+    elseif WINDOWS()
+        set guifont=DejaVu_Sans_Mono_for_Powerline:h9
+        if g:hostname == '2012-DEV'
+            set guifontwide=SimHei:h10
+        endif
+        set noerrorbells visualbell t_vb=
+        autocmd GUIEnter * set visualbell t_vb=
     else
         set guifont=Consolas:h10
-        set guifontwide=SimHei:h10
     endif
-    set guioptions=eg
+    set guioptions=egm
 else
     set mouse=a
     if &term =~ '^screen'
@@ -17,22 +23,26 @@ else
         set ttymouse=xterm2
     endif
 
+    let g:solarized_termcolors= 256
     let g:solarized_termtrans = 1
-    " colorscheme desert
     colorscheme solarized
+    "colorscheme desert
     set background=dark
 endif
 
 if exists('$TMUX')
     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
     let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+    set term=screen-256color
 else
     let &t_SI = "\<Esc>]50;CursorShape=1\x7"
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
 set number
-set relativenumber
+if version >= 703
+    set relativenumber
+endif
 " Minimal number of screen lines to keep above and below the cursor.
 set scrolloff=1
 
@@ -41,7 +51,7 @@ set scrolloff=1
 "--------------------------------------------------
 
 " the list of encodings considered when starting to edit an existing file.
-set fileencodings=cp936,ucs-bom,utf-8,gb18030,big5,euc-jp,euc-kr,latin1
+set fileencodings=utf-8,cp936,ucs-bom,gb18030,big5,euc-jp,euc-kr,latin1
 
 " fileencoding(fenc): for the file of this buffer.
 " let Vim detects it automatically.
@@ -291,4 +301,3 @@ endfunction
 command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)
 
 " Helper functions }}}
-

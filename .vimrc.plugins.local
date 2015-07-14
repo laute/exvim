@@ -34,7 +34,7 @@ let g:miniBufExplTabWrap = 1
 " ---------------------------------------------------
 Plugin 'bling/vim-airline'
 
-if has('gui_running')
+if has('gui_running') && g:hostname != '2012-DEV'
     let g:airline_powerline_fonts = 1
 else
     let g:airline_powerline_fonts = 0
@@ -66,5 +66,12 @@ endf
 " Jump to tag
 nn <c-g> :call JumpToDef()<cr>
 ino <c-g> <esc>:call JumpToDef()<cr>i
+
+let tlist_nim_settings='nim;f:procedure;t:class;t:enum;t:tuple;f:method;t:template'
 " nim related }
+
+" emmet
+imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+
+Plugin 'oplatek/Conque-Shell'
 
