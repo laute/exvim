@@ -110,6 +110,10 @@ vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
 inoremap <silent> <c-s> <esc>:w<cr>i
 noremap <silent> <c-s> :w<cr>
 nnoremap <leader>w :w!<cr>
+if !WINDOWS()
+    " save file as root
+    cmap w!! w !sudo tee > /dev/null %
+endif
 "}
 
 "--------------------------------------------------
