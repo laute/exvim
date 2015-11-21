@@ -3,3 +3,6 @@ source ~/box/exvim/.vimrc
 
 nnoremap <leader>ccc :ed ~/box/exvim/.vimrc.local<cr>
 nnoremap <leader>ss :so ~/.vimrc<cr>
+
+highlight ColorColumn ctermbg=235 guibg=#2c2d27
+let &colorcolumn="80,".join(range(120,999),",")

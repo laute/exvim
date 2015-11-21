@@ -71,7 +71,16 @@ let tlist_nim_settings='nim;f:procedure;t:class;t:enum;t:tuple;f:method;t:templa
 " nim related }
 
 " emmet
-imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+" autocmd FileType html,css imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
 Plugin 'oplatek/Conque-Shell'
+
+Plugin 'nvie/vim-flake8'
+autocmd BufWritePost *.py call Flake8()
+
+Plugin 'hynek/vim-python-pep8-indent'
+let g:pymode_indent = 0
+
+" vim-easymotion
+let g:EasyMotion_smartcase = 1
 

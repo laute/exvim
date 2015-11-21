@@ -176,8 +176,8 @@ nnoremap <silent> ]C :clast<cr>
 " the "anonymous" register is aliased to the * register using:
 set clipboard=unnamed
 " toggle indentation when pasting
-set paste
-"set nopaste
+" set paste
+set nopaste
 " use ,v to select text just copied
 nnoremap <leader>v v`]
 " }
@@ -301,3 +301,4 @@ endfunction
 command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)
 
 " Helper functions }}}
+" vi: syntax=vim
