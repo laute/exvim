@@ -78,9 +78,12 @@ Plugin 'oplatek/Conque-Shell'
 Plugin 'nvie/vim-flake8'
 autocmd BufWritePost *.py call Flake8()
 
+let g:flake8_show_quickfix=0  " don't show
+let g:flake8_show_in_gutter=1  " show
+let g:flake8_show_in_file=1  " show
+
 Plugin 'hynek/vim-python-pep8-indent'
 let g:pymode_indent = 0
 
 " vim-easymotion
 let g:EasyMotion_smartcase = 1
-

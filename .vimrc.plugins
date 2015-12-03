@@ -309,7 +309,7 @@ let g:NERDRemoveExtraSpaces = 1
 let g:NERDCustomDelimiters = {
             \ 'vimentry': { 'left': '--' },
             \ }
-map <unique> <F11> <Plug>NERDCommenterToggle
+map <unique> <F10> <Plug>NERDCommenterToggle
 " map <unique> <F11> <Plug>NERDCommenterAlignBoth
 " map <unique> <C-F11> <Plug>NERDCommenterUncomment
 

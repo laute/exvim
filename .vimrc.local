@@ -168,10 +168,10 @@ nnoremap <silent> <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 " cope: quickfix {
 nnoremap <silent> <leader>cn :botright cope<cr>
 nnoremap <silent> <leader>ce ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
-nnoremap <silent> [c :cp<cr>
-nnoremap <silent> ]c :cn<cr>
-nnoremap <silent> [C :cfirst<cr>
-nnoremap <silent> ]C :clast<cr>
+nnoremap <silent> [e :cp<cr>
+nnoremap <silent> ]e :cn<cr>
+nnoremap <silent> [E :cfirst<cr>
+nnoremap <silent> ]E :clast<cr>
 " }
 
 " copy and paste {
@@ -185,6 +185,12 @@ set nopaste
 " use ,v to select text just copied
 nnoremap <leader>v v`]
 " }
+
+" copy to buffer
+vmap <C-c> :w! ~/.vimbuffer<CR>
+nmap <C-c> :.w! ~/.vimbuffer<CR>
+" paste from buffer
+map <C-y> :r ~/.vimbuffer<CR>
 
 " code navigation {
 "--------------------------------------------------
