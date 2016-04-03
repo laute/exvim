@@ -247,6 +247,12 @@ Plugin 'exvim/ex-colorschemes'
 " ---------------------------------------------------
 Plugin 'altercation/vim-colors-solarized'
 
+" vim-color-gruvbox
+" ---------------------------------------------------
+Plugin 'morhetz/gruvbox'
+
+" let g:gruvbox_contrast_dark = 'soft'
+
 " DISABLE: vim-airline makes Vim editing slow when there are too many buffers opened
 "          if you don't mind, and love this plugin, uncomment the script below
 "          to enable it
@@ -319,6 +325,7 @@ Plugin 'scrooloose/syntastic'
 
 " this will make html file by Angular.js ignore errors
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+let g:syntastic_javascript_checkers = ['eslint']
 
 " DISABLE: use ex-autocomplpop instead
 " " neocomplcache: invoke when you insert words
