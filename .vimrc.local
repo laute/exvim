@@ -46,6 +46,12 @@ endif
 " Minimal number of screen lines to keep above and below the cursor.
 set scrolloff=1
 
+set expandtab
+" shiftwidth should 0 for newer version of Vim
+set shiftwidth=0
+set tabstop=4
+set softtabstop=4
+
 "--------------------------------------------------
 " encoding settings {{
 "--------------------------------------------------
